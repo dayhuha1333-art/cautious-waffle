@@ -1,4 +1,4 @@
-﻿buildscript {
+buildscript {
     repositories {
         jcenter()
         maven { url = "https://files.minecraftforge.net/maven" }
@@ -13,7 +13,7 @@
 apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'org.spongepowered.mixin'
 
-version = "1.0"
+version = "2.2"
 group = "net.mase.partimize"
 archivesBaseName = "Partimize"
 
