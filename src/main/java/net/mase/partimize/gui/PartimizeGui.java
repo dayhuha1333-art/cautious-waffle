@@ -37,7 +37,7 @@ public class PartimizeGui extends GuiScreen {
         GlStateManager.pushMatrix();
         GlStateManager.translate(width / 2 - 75, 10, 0);
         GlStateManager.scale(1.5f, 1.5f, 1.5f);
-        drawCenteredString(fontRenderer, "Partimize v1.0", 0, 0, 0xFFFFFF);
+        drawCenteredString(fontRenderer, "Partimize v2.2", 0, 0, 0xFFFFFF);
         GlStateManager.popMatrix();
 
         updateFps();
@@ -54,8 +54,9 @@ public class PartimizeGui extends GuiScreen {
     protected void actionPerformed(GuiButton button) {
         switch (button.id) {
             case 0:
-                for (String key : ConfigManager.particleDisabled.keySet()) {
-                    ConfigManager.particleDisabled.put(key, !ConfigManager.particleDisabled.get(key));
+                // ИСПРАВЛЕНО: используем публичные методы
+                for (String key : ConfigManager.getParticleKeys()) {
+                    ConfigManager.toggleParticle(key);
                 }
                 ConfigManager.saveConfig();
                 break;
