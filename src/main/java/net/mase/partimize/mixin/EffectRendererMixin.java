@@ -1,8 +1,7 @@
 package net.mase.partimize.mixin;
 
-import net.mase.partimize.ConfigManager;
 import net.mase.partimize.cache.ParticleCache;
-import net.minecraft.client.particle.EffectRenderer;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.util.EnumParticleTypes;
 import org.spongepowered.asm.mixin.Mixin;
@@ -10,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(EffectRenderer.class)
+@Mixin(targets = {"net.minecraft.client.particle.EffectRenderer"})
 public class EffectRendererMixin {
 
     @Inject(method = "addParticle(Lnet/minecraft/util/EnumParticleTypes;DDDDDD[I)Lnet/minecraft/client/particle/Particle;", at = @At("HEAD"), cancellable = true)
