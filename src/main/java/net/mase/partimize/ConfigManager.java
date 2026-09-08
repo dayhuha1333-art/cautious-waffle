@@ -5,7 +5,9 @@ import net.minecraftforge.common.config.Property;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class ConfigManager {
@@ -82,6 +84,21 @@ public class ConfigManager {
     public static void toggleParticle(String name) {
         boolean current = particleDisabled.getOrDefault(name, true);
         particleDisabled.put(name, !current);
+        saveConfig();
+    }
+
+    // ===== НОВЫЕ МЕТОДЫ ДЛЯ GUI =====
+    
+    public static Set<String> getParticleKeys() {
+        return new HashSet<>(particleDisabled.keySet());
+    }
+
+    public static Map<String, Boolean> getParticleStates() {
+        return new HashMap<>(particleDisabled);
+    }
+
+    public static void setParticleDisabled(String name, boolean disabled) {
+        particleDisabled.put(name, disabled);
         saveConfig();
     }
 
