@@ -1,0 +1,49 @@
+﻿buildscript {
+    repositories {
+        jcenter()
+        maven { url = "https://files.minecraftforge.net/maven" }
+        maven { url = "https://repo.spongepowered.org/maven" }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+        classpath 'org.spongepowered:mixingradle:0.6-SNAPSHOT'
+    }
+}
+
+apply plugin: 'net.minecraftforge.gradle.forge'
+apply plugin: 'org.spongepowered.mixin'
+
+version = "1.0"
+group = "net.mase.partimize"
+archivesBaseName = "Partimize"
+
+sourceCompatibility = targetCompatibility = '1.8'
+
+minecraft {
+    version = "1.12.2-14.23.5.2847"
+    runDir = "run"
+    mappings = "stable_39"
+}
+
+repositories {
+    maven { url = "https://repo.spongepowered.org/maven" }
+}
+
+dependencies {
+    compile 'org.spongepowered:mixin:0.7.11-SNAPSHOT'
+}
+
+mixin {
+    add sourceSets.main, "mixins.partimize.refmap.json"
+}
+
+jar {
+    manifest {
+        attributes(
+            'MixinConfigs': 'mixins.partimize.json',
+            'TweakClass': 'org.spongepowered.asm.launch.MixinTweaker',
+            'FMLCorePluginContainsFMLMod': 'true',
+            'ForceLoadAsMod': 'true'
+        )
+    }
+}
