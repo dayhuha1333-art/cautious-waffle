@@ -3,15 +3,18 @@ buildscript {
         jcenter()
         maven { url = "https://files.minecraftforge.net/maven" }
         maven { url = "https://repo.spongepowered.org/maven" }
+        maven { url = "https://plugins.gradle.org/m2/" }
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
         classpath 'org.spongepowered:mixingradle:0.6-SNAPSHOT'
+        classpath 'com.github.jengelman.gradle.plugins:shadow:4.0.4'
     }
 }
 
 apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'org.spongepowered.mixin'
+apply plugin: 'com.github.johnrengelman.shadow'
 
 version = "2.2"
 group = "net.mase.partimize"
@@ -37,6 +40,18 @@ mixin {
     add sourceSets.main, "mixins.partimize.refmap.json"
 }
 
+shadowJar {
+    classifier = ''
+    relocate 'org.spongepowered.asm', 'net.mase.partimize.repackage.asm'
+    relocate 'org.spongepowered.tools', 'net.mase.partimize.repackage.tools'
+    configurations = [project.configurations.compile]
+    exclude 'dummyThing'
+}
+
+reobf {
+    shadowJar {}
+}
+
 jar {
     manifest {
         attributes(
@@ -47,3 +62,5 @@ jar {
         )
     }
 }
+
+build.dependsOn shadowJar
