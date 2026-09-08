@@ -1,7 +1,6 @@
 package net.mase.partimize.mixin;
 
 import net.mase.partimize.cache.ParticleCache;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.util.EnumParticleTypes;
 import org.spongepowered.asm.mixin.Mixin;
@@ -12,8 +11,23 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(targets = {"net.minecraft.client.particle.EffectRenderer"})
 public class EffectRendererMixin {
 
-    @Inject(method = "addParticle(Lnet/minecraft/util/EnumParticleTypes;DDDDDD[I)Lnet/minecraft/client/particle/Particle;", at = @At("HEAD"), cancellable = true)
-    private void onAddParticle(EnumParticleTypes particleType, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, int[] parameters, CallbackInfoReturnable<Particle> cir) {
+    @Inject(
+        method = "addParticle",
+        at = @At("HEAD"),
+        cancellable = true,
+        remap = false
+    )
+    private void onAddParticle(
+        EnumParticleTypes particleType,
+        double x,
+        double y,
+        double z,
+        double xSpeed,
+        double ySpeed,
+        double zSpeed,
+        int[] parameters,
+        CallbackInfoReturnable<Particle> cir
+    ) {
         if (particleType == null) return;
 
         String name = particleType.getParticleName();
